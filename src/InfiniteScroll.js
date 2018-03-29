@@ -61,6 +61,9 @@ export default class InfiniteScroll extends Component {
     if (this.props.useWindow === false) {
       scrollEl = this.scrollComponent.parentNode;
     }
+    if (this.props.useDocBody === true) {
+      scrollEl = document.body;
+    }
 
     scrollEl.removeEventListener(
       'mousewheel',
@@ -73,6 +76,9 @@ export default class InfiniteScroll extends Component {
     let scrollEl = window;
     if (this.props.useWindow === false) {
       scrollEl = this.scrollComponent.parentNode;
+    }
+    if (this.props.useDocBody === true) {
+      scrollEl = document.body;
     }
 
     scrollEl.removeEventListener(
@@ -95,6 +101,9 @@ export default class InfiniteScroll extends Component {
     let scrollEl = window;
     if (this.props.useWindow === false) {
       scrollEl = this.scrollComponent.parentNode;
+    }
+    if (this.props.useDocBody === true) {
+      scrollEl = document.body;
     }
 
     scrollEl.addEventListener(
@@ -145,7 +154,11 @@ export default class InfiniteScroll extends Component {
           this.calculateTopPosition(el) +
           (el.offsetHeight - scrollTop - window.innerHeight);
       }
-    } else if (this.props.isReverse) {
+    } else if(this.props.useDocBody){
+      var scrollTop = document.body.scrollTop;
+      offset = this.calculateTopPosition(el) + (el.offsetHeight - scrollTop - window.innerHeight);
+    }
+    else if (this.props.isReverse) {
       offset = el.parentNode.scrollTop;
     } else {
       offset =
